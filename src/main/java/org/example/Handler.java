@@ -21,6 +21,7 @@ public class Handler implements HttpHandler {
         String query = uri.getQuery();
         String[] param = query.split("[=&]");
 
+
         String output = "";
         if(param[0].equals("cmd")){
             switch(param[1]){
@@ -42,6 +43,16 @@ public class Handler implements HttpHandler {
                             output += wines.get(i) + "<br>";
                         }
                     }
+                    break;
+
+                case "Sorted_by_name":
+                    break;
+
+                case "Sorted_by_price":
+                    break;
+
+                default:
+                    System.out.println("errore");
                     break;
             }
         }
