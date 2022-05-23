@@ -23,14 +23,6 @@ public class Wines {
                 '}';
     }
 
-    public static Wines[] testData(){
-        return new Wines[]{
-                new Wines(1, "white", "Dom Perignon Vintage Moet & Chandon 2008", 225.94),
-                new Wines(2, "red", "Pignoli Radikon Radikon 2009", 133.0),
-                new Wines(3, "red", "Pinot Nero Elena Walch Elena Walch", 43.0),
-        };
-    }
-
     public int getId() {
         return id;
     }
