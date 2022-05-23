@@ -86,7 +86,7 @@ public class Handler implements HttpHandler {
     }
 
     private String read(InputStream is) {
-        BufferedReader br = new BufferedReader(
+        BufferedReader input = new BufferedReader(
                 new InputStreamReader(is));
 
         System.out.println("\n");
@@ -96,7 +96,8 @@ public class Handler implements HttpHandler {
             String s = null;
 
             try {
-                if ((s = br.readLine()) == null ) break;
+                if ((s = input.readLine()) == null )
+                    break;
             } catch (IOException e) {
                 System.out.println("errore"+e);
             }
