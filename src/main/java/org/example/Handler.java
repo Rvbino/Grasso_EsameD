@@ -2,7 +2,6 @@ package org.example;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-
 import java.io.*;
 import java.net.URI;
 import java.util.ArrayList;
@@ -15,40 +14,53 @@ public class Handler implements HttpHandler {
     }
 
     public void handle(HttpExchange t) throws IOException {
-        InputStream is = t.getRequestBody();
-
         URI uri = t.getRequestURI();
         String query = uri.getQuery();
-        String[] param = query.split("[=&]");
-
+        String[] v = query.split("[=&]");
+        InputStream is = t.getRequestBody();
 
         String output = "";
-        if(param[0].equals("cmd")){
-            switch(param[1]){
+        ArrayList<Wines> box = (ArrayList<Wines>) wines.clone();
+        if(v[0].equals("cmd")){
+            switch(v[1]){
+
                 case "all":
                     for(int i = 0; i < wines.size(); i++) {
-                        output += wines.get(i) + "<br>";
+                        output += wines.get(i);
                     }
                     break;
+
                 case "red":
                     for(int i = 0; i < wines.size(); i++) {
                         if(wines.get(i).getType().equals("red")){
-                            output += wines.get(i) + "<br>";
+                            output += wines.get(i);
                         }
                     }
                     break;
+
                 case "white":
                     for(int i = 0; i < wines.size(); i++) {
                         if(wines.get(i).getType().equals("white")){
-                            output += wines.get(i) + "<br>";
+                            output += wines.get(i);
                         }
                     }
                     break;
 
-                case "Sorted_by_name":
+                case "sorted_by_name":
+                    for(int i = 0; i < box.size(); i++) {
+                        output += box.get(i);
+                    }
                     break;
 
-                case "Sorted_by_price":
+                case "sorted_by_price":
+                    box.sort((p1, p2) -> {
+                        if(p1.getPrice() > p2.getPrice()) return 1;
+                        if(p1.getPrice() < p2.getPrice()) return -1;
+                        return 0;
+                    });
+                    for(int i = 0; i < box.size(); i++) {
+                        output += box.get(i);
+                    }
                     break;
 
                 default:
@@ -56,9 +68,6 @@ public class Handler implements HttpHandler {
                     break;
             }
         }
-
-
-
         String response = "<!doctype html>\n" +
                 "<html lang=en>\n" +
                 "<head>\n" +
@@ -82,21 +91,18 @@ public class Handler implements HttpHandler {
 
         System.out.println("\n");
         String received = null;
+
         while (true) {
             String s = null;
+
             try {
                 if ((s = br.readLine()) == null ) break;
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("errore"+e);
             }
             System.out.println(s);
             received += s;
-
         }
         return received;
     }
-
-
-
-
 }

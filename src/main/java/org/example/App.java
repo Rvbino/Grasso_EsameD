@@ -14,16 +14,16 @@ public class App
         wines.add(new Wines(13, "white","Dom perignon Vintage Moet & chandon 2008", 225.94));
         wines.add(new Wines(14, "red","Pignoli Radikon Radikon", 133.0));
         wines.add(new Wines(124, "red", "Pinot Nero Elena Walch Elena Walch", 43.0));
-
         HttpServer server = null;
+
         try {
             server = HttpServer.create(new InetSocketAddress(8000), 0);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         server.createContext("/", new Handler(wines));
         server.setExecutor(null);
         server.start();
     }
-
 }
