@@ -46,4 +46,9 @@ public class ElabArray {
         }
         return msg;
     }
+
+    String SortPrice(){
+        arr.sort((Wines p1, Wines p2)->(int)(p1.getPrice()-p2.getPrice()));
+        return arr.get(0).toString();
+    }
 }
