@@ -1,37 +1,30 @@
 package org.example;
+
+import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
-import java.net.ServerSocket;
+import java.net.InetSocketAddress;
+import java.util.ArrayList;
 
-import static java.lang.System.exit;
+//curl: http://127.0.0.1:8000/?cmd=all
 
-public class App {
-    private static int port = 1234;
-    private static ServerSocket server;
+public class App
+{
+    public static void main( String[] args ) {
+        ArrayList<Wines> wines = new ArrayList<>();
+        wines.add(new Wines(13, "white","Dom perignon Vintage Moet & chandon 2008", 225.94));
+        wines.add(new Wines(14, "red","Pignoli Radikon Radikon", 133.0));
+        wines.add(new Wines(124, "red", "Pinot Nero Elena Walch Elena Walch", 43.0));
 
-    public static void main(String[] args){
-        initServer();
-        waitClients();
-    }
-
-    private static void initServer(){
+        HttpServer server = null;
         try {
-            server = new ServerSocket(port);
+            server = HttpServer.create(new InetSocketAddress(8000), 0);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
-            exit(-1);
+            e.printStackTrace();
         }
-        System.out.println("--server started");
+        server.createContext("/", new Handler(wines));
+        server.setExecutor(null);
+        server.start();
     }
 
-    private static void waitClients(){
-        System.out.println("--waiting clients");
-        try {
-            new Thread(new Handler(
-                    server.accept()
-            )).start();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-            exit(-1);
-        }
-    }
+
 }

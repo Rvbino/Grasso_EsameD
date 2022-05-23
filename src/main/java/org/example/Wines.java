@@ -13,6 +13,16 @@ public class Wines {
         this.price = price;
     }
 
+    @Override
+    public String toString() {
+        return "Wines{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                '}';
+    }
+
     public static Wines[] testData(){
         return new Wines[]{
                 new Wines(1, "white", "Dom Perignon Vintage Moet & Chandon 2008", 225.94),

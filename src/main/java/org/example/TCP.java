@@ -15,7 +15,6 @@ public class TCP {
         setSocket(socket);
     }
 
-    //reads string from the other side, returns null upon failure
     public String read(){
         String result = null;
 
@@ -27,7 +26,6 @@ public class TCP {
         return result;
     }
 
-    //writes string to the other side
     public void write(String msg){
         writer.write(msg);
     }
